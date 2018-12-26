@@ -26,7 +26,7 @@ HUNTER_THREADS = os.getenv('CIF_HUNTER_THREADS', 0)
 HUNTER_THREADS = os.getenv('CIF_HUNTER_THREADS', 1) # conan add
 HUNTER_ADVANCED = os.getenv('CIF_HUNTER_ADVANCED', 0)
 HUNTER_ADVANCED = os.getenv('CIF_HUNTER_ADVANCED', 1) # conan add 
-GATHERER_THREADS = os.getenv('CIF_GATHERER_THREADS', 2)
+GATHERER_THREADS = os.getenv('CIF_GATHERER_THREADS', 1) # conan add 2->1
 STORE_DEFAULT = 'sqlite'
 STORE_PLUGINS = ['cif.store.dummy', 'cif.store.sqlite', 'cif.store.elasticsearch']
 

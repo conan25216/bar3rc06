@@ -21,7 +21,7 @@ HUNTER_ADVANCED = os.getenv('CIF_HUNTER_ADVANCED', 0)
 TRACE = os.environ.get('CIF_HUNTER_TRACE', False)
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 if TRACE in [1, '1']:
    logger.setLevel(logging.DEBUG)
@@ -92,7 +92,7 @@ class Hunter(multiprocessing.Process):
 
             data = socket.recv_multipart() # socket is a pull, so self.hunter should be a router? or dealer?
 
-            logger.debug(data) # data: ['{"nolog": "False", "indicator": "10.10.10.10", "limit": "500"}']
+            logger.debug("hunter recieve data from zmq:{}".format(data)) # data: ['{"nolog": "False", "indicator": "10.10.10.10", "limit": "500"}']
             data = json.loads(data[0])
 
             if isinstance(data, dict):
@@ -133,7 +133,7 @@ class Hunter(multiprocessing.Process):
                         if not HUNTER_ADVANCED:
                             continue
                     try:
-                        p.process(d, router) # run specific hunter plugin,
+                        p.process(d, router) # run specific hunter plugin, if hunter failed giving up 
                     except Exception as e:
                         logger.error(e)
                         logger.error('[{}] giving up on: {}'.format(p, d)) 
