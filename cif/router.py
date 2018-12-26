@@ -149,7 +149,7 @@ class Router(object):
 
         sleep(0.01)
 
-    def start(self):
+    def start(self): # open 4 router waiting for request..
         self.logger.debug('starting loop')
 
         self.poller_backend.register(self.hunter_sink_s, zmq.POLLIN)
@@ -164,7 +164,7 @@ class Router(object):
             items = dict(self.poller.poll(FRONTEND_TIMEOUT))
 
             if self.frontend_s in items and items[self.frontend_s] == zmq.POLLIN:
-                self.logger.debug("get a frontend request:{}".format(self.frontend_s))
+                self.logger.debug("01 get a frontend request:{}".format(self.frontend_s))
                 self.handle_message(self.frontend_s)
 
             if self.store_s in items and items[self.store_s] == zmq.POLLIN:
@@ -193,26 +193,27 @@ class Router(object):
     def handle_message(self, s):
         id, token, mtype, data = Msg().recv(s)
 
-        logger.debug("router handle_message:{}".format(s)) # s is a socket.Socket
+        logger.debug("02 router handle_message:{}".format(s)) # s is a socket.Socket
 
-        handler = self.handle_message_default
+        handler = self.handle_message_default # what's this function?
         if mtype in ['indicators_create', 'indicators_search']:
             handler = getattr(self, "handle_" + mtype)
 
         try:
             handler(id, mtype, token, data)
-            logger.debug("router handler :{}".format(handler))
+            logger.debug("07 router handler :{}".format(handler))
         except Exception as e:
             self.logger.error(e)
 
         self._log_counter()
 
     def handle_message_default(self, id, mtype, token, data='[]'):
-        logger.debug("3- coming to handle_message_default, then go to zmq line")
+        logger.debug("04 coming to handle_message_default, then go to zmq line")
         Msg(id=id, mtype=mtype, token=token, data=data).send(self.store_s)
 
     def handle_message_store(self, s):
         # re-routing from store to front end, conan add: why?
+        logger.debug("08- after search sqlite, go back to here, s is :{}".format(s))
         id, mtype, token, data = Msg().recv(s)
 
         Msg(id=id, mtype=mtype, token=token, data=data).send(self.frontend_s)
@@ -234,12 +235,12 @@ class Router(object):
                 self.hunters_s.send_string(json.dumps(d))
 
     def handle_indicators_search(self, id, mtype, token, data):
-        logger.debug("jump to second handler")
+        logger.debug("03 if search coming to search")
         self.handle_message_default(id, mtype, token, data)
 
-        logger.debug("sending to default handler, then go to hunters")
+        logger.debug("05 sending to default handler, then go to hunters")
         if self.hunters:
-            logger.debug("self.hunters:{}".format(self.hunters)) # to figure out what is send_string
+            logger.debug("06 self.hunters:{}".format(self.hunters)) # to figure out what is send_string
             self.hunters_s.send_string(data)
 
     def handle_indicators_create(self, id, mtype, token, data):

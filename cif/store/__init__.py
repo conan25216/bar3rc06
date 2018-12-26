@@ -83,11 +83,12 @@ class Store(multiprocessing.Process):
 
     def _load_plugin(self, **kwargs): # conan add here, we have three plugins: store.dummy store.sqlite store.elas
         # TODO replace with cif.utils.load_plugin
-        logger.debug('store is: {}'.format(self.store))
+        logger.debug('store is: {}'.format(self.store)) # self.store = sqlite
         for loader, modname, is_pkg in pkgutil.iter_modules(cif.store.__path__, 'cif.store.'):
-            logger.debug('testing store plugin: {}'.format(modname))
+            logger.debug('testing store plugin: {}'.format(modname)) 
+            # cif.store.dummy/indicator_plugin/plugin/sqlite/token_plugin/zelasticsearch
             if modname == 'cif.store.{}'.format(self.store) or modname == 'cif.store.z{}'.format(self.store):
-                logger.debug('Loading plugin: {0}'.format(modname))
+                logger.debug('Loading plugin: {0}'.format(modname)) # only load sqlite 
                 self.store = loader.find_module(modname).load_module(modname)
                 self.store = self.store.Plugin(**kwargs)
 
@@ -98,7 +99,7 @@ class Store(multiprocessing.Process):
 
         self.token_create_admin()
 
-        logger.debug('connecting to router: {}'.format(self.store_addr))
+        logger.debug('connecting to router: {}'.format(self.store_addr)) # store.ipc
         self.router.connect(self.store_addr)
 
         logger.info('connected')
@@ -117,7 +118,9 @@ class Store(multiprocessing.Process):
 
             if self.router in m:
                 m = Msg().recv(self.router)
-                logger.debug("msg recieved from router:{}".format(m)) # conan add here 
+                logger.debug("store-01 msg recieved from router:{}".format(m)) # conan add here 
+# m :('\x00k\x8bEg', '\x00\xe4<\x98i', u'b7621783506768b03b9dd71cfaf38b5df7e12d4766999ce434cc235f707c8899c04877d45e94fe7d', 
+# 'indicators_search', u'{"nolog": "False", "indicator": "10.10.10.10", "limit": "500"}')
                 self.handle_message(m)
 
             if len(self.create_queue) > 0 and ((time.time() - last_flushed) > self.create_queue_flush) or (self.create_queue_count >= self.create_queue_max):
@@ -141,7 +144,7 @@ class Store(multiprocessing.Process):
         err = None
         id, client_id, token, mtype, data = m
 
-        logger.debug("store handler message")
+        logger.debug("store-02 store handler message")
         if isinstance(data, basestring):
             try:
                 data = json.loads(data)
@@ -152,7 +155,7 @@ class Store(multiprocessing.Process):
                 return
 
         handler = getattr(self, "handle_" + mtype)
-        logger.debug("store handler:{}".format(handler))
+        logger.debug("store-03 store handler:{}".format(handler))
         if not handler:
             logger.error('message type {0} unknown'.format(mtype))
             Msg(id=id, data='0')
@@ -160,7 +163,6 @@ class Store(multiprocessing.Process):
         try:
             rv = handler(token, data, id=id, client_id=client_id)
             logger.debug("rv :{}".format(rv)) # conan add here 
-            logger.debug("token:{}".format(token)) 
             logger.debug("data:{}".format(data)) # 
 
             if rv == MORE_DATA_NEEDED:
@@ -383,8 +385,9 @@ class Store(multiprocessing.Process):
         self._log_search(t, data)
 
         try:
-            logger.debug("store indicators search self:{}".format(self))
-            logger.debug("what is indicators {}".format(self.store.indicators))
+            logger.debug("store-04 store indicators search self:{}".format(self)) # self :Store(store-1,unknow)
+            logger.debug("what is indicators {}".format(self.store.indicators)) # cif.store.sqlite.indicator.IndicatorManager
+            logger.debug(" data tobe searched by sqlite :{}".format(data))
             x = self.store.indicators.search(t, data) # conan add ,real search action is here
             logger.debug('done')
         except Exception as e:
