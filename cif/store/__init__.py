@@ -386,8 +386,8 @@ class Store(multiprocessing.Process):
 
         try:
             logger.debug("store-04 store indicators search self:{}".format(self)) # self :Store(store-1,unknow)
-            logger.debug("what is indicators {}".format(self.store.indicators)) # cif.store.sqlite.indicator.IndicatorManager
-            logger.debug(" data tobe searched by sqlite :{}".format(data))
+            logger.debug("Indicators {}".format(self.store.indicators)) # cif.store.sqlite.indicator.IndicatorManager
+            logger.debug("Data tobe searched by sqlite :{}".format(data))
             x = self.store.indicators.search(t, data) # conan add ,real search action is here
             logger.debug('done')
         except Exception as e:

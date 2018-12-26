@@ -173,11 +173,11 @@ class Router(object):
 
             items = dict(self.poller_backend.poll(BACKEND_TIMEOUT))
 
-            if self.gatherer_sink_s in items and items[self.gatherer_sink_s] == zmq.POLLIN:
+            if self.gatherer_sink_s in items and items[self.gatherer_sink_s] == zmq.POLLIN: # new ioc will be here
                 self.logger.debug("get a gatherer request:{}".format(self.gatherer_sink_s))
                 self.handle_message_gatherer(self.gatherer_sink_s)
 
-            if self.hunter_sink_s in items and items[self.hunter_sink_s] == zmq.POLLIN:
+            if self.hunter_sink_s in items and items[self.hunter_sink_s] == zmq.POLLIN: # new ioc will be hunter again
                 self.logger.debug("get a hunter request:{}".format(self.hunter_sink_s))
                 self.handle_message(self.hunter_sink_s)
 
@@ -243,7 +243,7 @@ class Router(object):
             logger.debug("06 self.hunters:{}".format(self.hunters)) # to figure out what is send_string
             self.hunters_s.send_string(data)
 
-    def handle_indicators_create(self, id, mtype, token, data):
+    def handle_indicators_create(self, id, mtype, token, data): # hunter failed, new ioc ,will go to create
         self.logger.debug("handle_indicators_create data :{}".format(data))
         Msg(id=id, mtype=mtype, token=token, data=data).send(self.gatherer_s)
 

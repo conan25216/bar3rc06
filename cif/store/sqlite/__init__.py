@@ -41,9 +41,9 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
-if not TRACE:
-    logger.setLevel(logging.ERROR)
-    logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
+# if not TRACE:
+    # logger.setLevel(logging.ERROR)
+    # logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
 
 VALID_FILTERS = ['indicator', 'confidence', 'provider', 'itype', 'group', 'tags']
 

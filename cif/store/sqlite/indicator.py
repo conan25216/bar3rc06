@@ -425,6 +425,7 @@ class IndicatorManager(IndicatorManagerPlugin):
         return s
 
     def search(self, token, filters, limit=500):
+        logger.debug("sqlite-indicators: sqlite search being called\nfilter: {}".format(filters))# filters:{u'nolog': u'False', u'indicator': u'10.10.10.12', u'limit': u'500'}
         s = self._search(filters, token)
 
         limit = filters.pop('limit', limit)

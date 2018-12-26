@@ -17,6 +17,7 @@ SNDTIMEO = 15000
 ZMQ_HWM = 1000000
 EXCLUDE = os.environ.get('CIF_HUNTER_EXCLUDE', None)
 HUNTER_ADVANCED = os.getenv('CIF_HUNTER_ADVANCED', 0)
+EXCLUDE = "hunter@vt.com:malware"
 
 TRACE = os.environ.get('CIF_HUNTER_TRACE', False)
 
@@ -43,6 +44,7 @@ class Hunter(multiprocessing.Process):
         self.exclude = {}
 
         if EXCLUDE: # whitelist for hunter provider and tags
+            logger.debug("hunter EXCLUDE:{}".format(EXCLUDE))
             for e in EXCLUDE.split(','): # usage: [cloud_sec_team: malware, 360:dga, ...] 
                 provider, tag = e.split(':')
 
@@ -92,7 +94,7 @@ class Hunter(multiprocessing.Process):
 
             data = socket.recv_multipart() # socket is a pull, so self.hunter should be a router? or dealer?
 
-            logger.debug("hunter recieve data from zmq:{}".format(data)) # data: ['{"nolog": "False", "indicator": "10.10.10.10", "limit": "500"}']
+            logger.debug("hunter-01 recieve data from zmq:{}".format(data)) # data: ['{"nolog": "False", "indicator": "10.10.10.10", "limit": "500"}']
             data = json.loads(data[0])
 
             if isinstance(data, dict):
@@ -123,6 +125,8 @@ class Hunter(multiprocessing.Process):
                 if d.indicator in ["", 'localhost', 'example.com']: 
                     continue
 
+                logger.debug("self.exclude.get(d.provider);\nprovider:{}, result:{}".format(d.provider,self.exclude.get(d.provider)))
+                logger.debug("d.tags:{}".format(d.tags))
                 if self.exclude.get(d.provider):
                     for t in d.tags:
                         if t in self.exclude[d.provider]:
@@ -133,6 +137,7 @@ class Hunter(multiprocessing.Process):
                         if not HUNTER_ADVANCED:
                             continue
                     try:
+                        logger.debug("hunter-02 find a hunter to hunter:{}".format(p))
                         p.process(d, router) # run specific hunter plugin, if hunter failed giving up 
                     except Exception as e:
                         logger.error(e)

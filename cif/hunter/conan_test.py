@@ -19,7 +19,7 @@ class VT_hunter(object):
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)
-        self.is_advanced = False
+        self.is_advanced = True
         self.logger.debug("coming to conan_test")
 
     def search_VT_file(self, md5, apikey):
@@ -151,9 +151,7 @@ class VT_hunter(object):
         md5.tags = "malware"
         md5.reporttime = hunter_result['reporttime']
         self.logger.debug("router is {}".format(router))
-        router.indicators_create(md5) # go to router了, 不知道这个indicators_create方法来自哪里了，看来要log一下
-        # 知道了，是这个类 cifsdk里的这个类 ZMQ(Client) socket = zmq.REQUEST
-        # 这个router的 remote 居然是router， 说明这里是去请求router，没有直接去store，发到消息队列去了吧
+        router.indicators_create(md5) # from hunter to router : indicators create
 
 
 
