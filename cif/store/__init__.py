@@ -152,7 +152,7 @@ class Store(multiprocessing.Process):
                 return
 
         handler = getattr(self, "handle_" + mtype)
-        logger.debug("store handler:{}".format(hanlder))
+        logger.debug("store handler:{}".format(handler))
         if not handler:
             logger.error('message type {0} unknown'.format(mtype))
             Msg(id=id, data='0')
