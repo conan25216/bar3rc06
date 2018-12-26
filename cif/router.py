@@ -52,7 +52,7 @@ PIDFILE = os.getenv('CIF_ROUTER_PIDFILE', '{}/cif_router.pid'.format(RUNTIME_PAT
 TRACE = os.environ.get('CIF_ROUTER_TRACE')
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.DEBUG) # conan add
 
 if TRACE in [1, '1']:
     logger.setLevel(logging.DEBUG)
@@ -193,7 +193,7 @@ class Router(object):
     def handle_message(self, s):
         id, token, mtype, data = Msg().recv(s)
 
-        logger.error("router handle_message:{}".format(s)) # s is a socket.Socket
+        logger.debug("router handle_message:{}".format(s)) # s is a socket.Socket
 
         handler = self.handle_message_default
         if mtype in ['indicators_create', 'indicators_search']:
@@ -212,7 +212,7 @@ class Router(object):
         Msg(id=id, mtype=mtype, token=token, data=data).send(self.store_s)
 
     def handle_message_store(self, s):
-        # re-routing from store to front end
+        # re-routing from store to front end, conan add: why?
         id, mtype, token, data = Msg().recv(s)
 
         Msg(id=id, mtype=mtype, token=token, data=data).send(self.frontend_s)

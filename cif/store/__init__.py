@@ -54,7 +54,7 @@ MORE_DATA_NEEDED = -2
 TRACE = os.environ.get('CIF_STORE_TRACE')
     
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.DEBUG) # conan add 
 
 if TRACE in [1, '1']:
    logger.setLevel(logging.DEBUG)
@@ -141,7 +141,7 @@ class Store(multiprocessing.Process):
         err = None
         id, client_id, token, mtype, data = m
 
-        logger.error("store handler message")
+        logger.debug("store handler message")
         if isinstance(data, basestring):
             try:
                 data = json.loads(data)
