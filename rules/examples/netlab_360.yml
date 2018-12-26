@@ -1,0 +1,213 @@
+parser: delim
+defaults:
+  provider: netlab.360.com
+  confidence: 7
+  tlp: green
+  altid: https://data.netlab.360.com/dga/
+  altid_tlp: white
+  protocol: tcp
+  tags:
+    - dga
+    - botnet
+  values:
+    - indicator
+    - firsttime
+    - lasttime
+
+
+feeds:
+  bamital:
+    remote: https://data.netlab.360.com/feeds/dga/bamital.txt
+    defaults:
+      description: bamital
+
+  banjori:
+    remote: https://data.netlab.360.com/feeds/dga/banjori.txt
+    defaults:
+      description: banjori    
+
+  balckhole:
+    remote: https://data.netlab.360.com/feeds/dga/balckhole.txt
+    defaults:
+      description: balckhole
+
+  ccleaner:
+    remote: https://data.netlab.360.com/feeds/dga/ccleaner.txt
+    defaults:
+      description: ccleaner
+
+  chinad:
+    remote: https://data.netlab.360.com/feeds/dga/chinad.txt
+    defaults:
+      description: chinad
+
+  conficker:
+    remote: https://data.netlab.360.com/feeds/dga/conficker.txt
+    defaults:
+      description: conficker
+
+  cryptolocker:
+    remote: https://data.netlab.360.com/feeds/dga/cryptolocker.txt
+    defaults:
+      description: cryptolocker
+
+  gspy:
+    remote: https://data.netlab.360.com/feeds/dga/gspy.txt
+    defaults:
+      description: gspy
+
+  dircrypt:
+    remote: https://data.netlab.360.com/feeds/dga/dircrypt.txt
+    defaults:
+      description: dircrypt
+
+  dyre:
+    remote: https://data.netlab.360.com/feeds/dga/dyre.txt
+    defaults:
+      description: dyre
+
+  emotet:
+    remote: https://data.netlab.360.com/feeds/dga/emotet.txt
+    defaults:
+      description: emotet
+
+  fobber:
+    remote: https://data.netlab.360.com/feeds/dga/fobber.txt
+    defaults:
+      description: fobber
+
+  gameover:
+    remote: https://data.netlab.360.com/feeds/dga/gameover.txt
+    defaults:
+      description: gameover
+
+  locky:
+    remote: https://data.netlab.360.com/feeds/dga/locky.txt
+    defaults:
+      description: locky
+
+  madmax:
+    remote: https://data.netlab.360.com/feeds/dga/madmax.txt
+    defaults:
+      description: madmax
+
+  matsnu:
+    remote: https://data.netlab.360.com/feeds/dga/matsnu.txt
+    defaults:
+      description: matsnu
+
+  mirai:
+    remote: https://data.netlab.360.com/feeds/dga/mirai.txt
+    defaults:
+      description: mirai
+
+  murofet:
+    remote: https://data.netlab.360.com/feeds/dga/murofet.txt
+    defaults:
+      description: murofet
+
+  necurs:
+    remote: https://data.netlab.360.com/feeds/dga/necurs.txt
+    defaults:
+      description: necurs
+
+  nymaim:
+    remote: https://data.netlab.360.com/feeds/dga/nymaim.txt
+    defaults:
+      description: nymaim
+
+  padcrypt:
+    remote: https://data.netlab.360.com/feeds/dga/padcrypt.txt
+    defaults:
+      description: padcrypt
+
+  proslikefan:
+    remote: https://data.netlab.360.com/feeds/dga/proslikefan.txt
+    defaults:
+      description: proslikefan
+
+  pykspa:
+    remote: https://data.netlab.360.com/feeds/dga/pykspa.txt
+    defaults:
+      description: pykspa
+
+  qadars:
+    remote: https://data.netlab.360.com/feeds/dga/qadars.txt
+    defaults:
+      description: qadars
+
+  ranmit:
+    remote: https://data.netlab.360.com/feeds/dga/ranmit.txt
+    defaults:
+      description: ranmit
+
+  ranbyus:
+    remote: https://data.netlab.360.com/feeds/dga/ranbyus.txt
+    defaults:
+      description: ranbyus
+
+  rovnix:
+    remote: https://data.netlab.360.com/feeds/dga/rovnix.txt
+    defaults:
+      description: rovnix
+
+  shifu:
+    remote: https://data.netlab.360.com/feeds/dga/shifu.txt
+    defaults:
+      description: shifu
+
+  simda:
+    remote: https://data.netlab.360.com/feeds/dga/simda.txt
+    defaults:
+      description: simda
+
+  suppobox:
+    remote: https://data.netlab.360.com/feeds/dga/suppobox.txt
+    defaults:
+      description: suppobox
+
+  symmi:
+    remote: https://data.netlab.360.com/feeds/dga/symmi.txt
+    defaults:
+      description: symmi
+
+  tempedreve:
+    remote: https://data.netlab.360.com/feeds/dga/tempedreve.txt
+    defaults:
+      description: tempedreve
+
+  tinba:
+    remote: https://data.netlab.360.com/feeds/dga/tinba.txt
+    defaults:
+      description: tinba
+
+  tinynuke:
+    remote: https://data.netlab.360.com/feeds/dga/tinynuke.txt
+    defaults:
+      description: tinynuke
+
+  tofsee:
+    remote: https://data.netlab.360.com/feeds/dga/tofsee.txt
+    defaults:
+      description: tofsee
+
+  vawtrak:
+    remote: https://data.netlab.360.com/feeds/dga/vawtrak.txt
+    defaults:
+      description: vawtrak
+
+  vidro:
+    remote: https://data.netlab.360.com/feeds/dga/vidro.txt
+    defaults:
+      description: vidro
+
+  virut:
+    remote: https://data.netlab.360.com/feeds/dga/virut.txt
+    defaults:
+      description: virut
+
+  xshellghost:
+    remote: https://data.netlab.360.com/feeds/dga/xshellghost.txt
+    defaults:
+      description: xshellghost
+
