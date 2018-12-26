@@ -411,7 +411,7 @@ class IndicatorManager(IndicatorManagerPlugin):
         myfilters = dict(filters.items())
 
         s = self.handle().query(Indicator) # conan add here, how they query?
-        self.logger.debug("self.handle():{}".format(self.hanle()))
+        logger.debug("self.handle():{}".format(self.handle()))
 
         # group support
 

@@ -127,7 +127,9 @@ class Hunter(multiprocessing.Process):
 
                 logger.debug("self.exclude.get(d.provider);\nprovider:{}, result:{}".format(d.provider,self.exclude.get(d.provider)))
                 logger.debug("d.tags:{}".format(d.tags))
-                if self.exclude.get(d.provider):
+                if d.tags = "malware_vt": # conan add here, it comes from vt, pass 
+                    continue 
+                if self.exclude.get(d.provider) or None:
                     for t in d.tags:
                         if t in self.exclude[d.provider]:
                             logger.debug('skipping: {}'.format(d.indicator))

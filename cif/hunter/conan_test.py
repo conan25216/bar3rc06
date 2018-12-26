@@ -19,7 +19,7 @@ class VT_hunter(object):
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)
-        self.is_advanced = True
+        self.is_advanced = False
         self.logger.debug("coming to conan_test")
 
     def search_VT_file(self, md5, apikey):
@@ -100,7 +100,7 @@ class VT_hunter(object):
         if data['positives'] >= 1:
             file_data['indicator'] = resource
             file_data['reporttime'] = data['scan_date']
-            file_data['tags'] = 'malware'
+            file_data['tags'] = 'malware_vt'
             file_data['confidence'] = 8
             for i in data['scans']:
                 if data['scans'][i]['detected'] == True:
